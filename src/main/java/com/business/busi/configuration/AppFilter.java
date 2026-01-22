@@ -65,10 +65,8 @@ public class AppFilter extends OncePerRequestFilter {
         }
 		 }catch (JwtException  e) {
 			 logger.error("JwtException doFilterInternal failed: {}",  e);
-	         throw new RuntimeException("JwtException error doFilterInternal ", e);
 	     }catch (Exception  e) {
 			 logger.error("Exception doFilterInternal failed: {}",  e);
-	         throw new RuntimeException("Exception error doFilterInternal ", e);
 	     }
 		
 		filterChain.doFilter(request, response);
