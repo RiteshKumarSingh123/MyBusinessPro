@@ -68,7 +68,7 @@ public class CustomerController {
 //	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<Map<String,String>> login(@RequestBody Customer customer){
+	public ResponseEntity<Map<String,String>> login(@RequestBody Customer customer) throws NoSuchAlgorithmException{
 		
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(customer.getName(), customer.getPassword());
 	    Authentication authenticate	= authManager.authenticate(token);
@@ -84,7 +84,7 @@ public class CustomerController {
 	}
 	
 	 @PostMapping("/logout")
-	    public Map<String, String> logout(@RequestHeader("Authorization") String authHeader){
+	    public Map<String, String> logout(@RequestHeader("Authorization") String authHeader) throws NoSuchAlgorithmException{
 		 if (authHeader != null && authHeader.startsWith("Bearer ")) {
 	        String token = authHeader.substring(7);
 	        jwt.deleteToken(token);
@@ -95,7 +95,7 @@ public class CustomerController {
 	    }
 
 	    @GetMapping("/validate")
-	    public Map<String, Object> validateToken(@RequestHeader("Authorization") String authHeader){
+	    public Map<String, Object> validateToken(@RequestHeader("Authorization") String authHeader) throws NoSuchAlgorithmException{
 	    	boolean valid = false;
 	    	if (authHeader != null && authHeader.startsWith("Bearer ")) {
 	        String token = authHeader.substring(7);
