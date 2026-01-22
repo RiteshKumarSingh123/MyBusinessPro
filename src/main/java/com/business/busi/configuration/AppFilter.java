@@ -1,7 +1,10 @@
 package com.business.busi.configuration;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,6 +23,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class AppFilter extends OncePerRequestFilter {
+	
+	private static final Logger logger = LoggerFactory.getLogger(AppFilter.class); 
 	
 	 @Autowired
 	 private JwtService jwtService;
@@ -58,8 +63,14 @@ public class AppFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
            }
         }
-		 } catch (JwtException  e) {
+		 }catch (JwtException  e) {
+			 logger.error("JwtException doFilterInternal failed: {}",  e);
+	         throw new RuntimeException("JwtException error doFilterInternal ", e);
+	     }catch (Exception  e) {
+			 logger.error("Exception doFilterInternal failed: {}",  e);
+	         throw new RuntimeException("Exception error doFilterInternal ", e);
 	     }
+		
 		filterChain.doFilter(request, response);
 		
 	}

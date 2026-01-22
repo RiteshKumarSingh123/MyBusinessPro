@@ -28,7 +28,7 @@ public class CustomerService implements UserDetailsService {
 		
 //		Customer customer = repository.findByEmail(email);
 		Customer customer = repository.findByName(username);
-		
+	
 //		return new User(customer.getEmail(), customer.getPassword(), Collections.emptyList());
 		return new User(customer.getName(), customer.getPassword(), Collections.emptyList());
 	}

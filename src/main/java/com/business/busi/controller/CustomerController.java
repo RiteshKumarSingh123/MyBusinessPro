@@ -1,5 +1,6 @@
 package com.business.busi.controller;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -83,7 +84,7 @@ public class CustomerController {
 	}
 	
 	 @PostMapping("/logout")
-	    public Map<String, String> logout(@RequestHeader("Authorization") String authHeader) {
+	    public Map<String, String> logout(@RequestHeader("Authorization") String authHeader){
 		 if (authHeader != null && authHeader.startsWith("Bearer ")) {
 	        String token = authHeader.substring(7);
 	        jwt.deleteToken(token);
@@ -94,13 +95,12 @@ public class CustomerController {
 	    }
 
 	    @GetMapping("/validate")
-	    public Map<String, Object> validateToken(@RequestHeader("Authorization") String authHeader) {
+	    public Map<String, Object> validateToken(@RequestHeader("Authorization") String authHeader){
 	    	boolean valid = false;
 	    	if (authHeader != null && authHeader.startsWith("Bearer ")) {
 	        String token = authHeader.substring(7);
 	        valid =  jwt.isTokenValid(token);
 	    	}
-            System.out.println(valid+"valid");
 	        Map<String, Object> response = new HashMap<>();
 	        response.put("valid", valid);
 	        return response;
